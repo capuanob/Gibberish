@@ -8,25 +8,40 @@
 
 import UIKit
 
-class LanguageViewController: UIViewController {
+struct permanentData {
+     static var chosenCiphers = [String]()
+     static var selectIndex = 0
+     static var isEncoding = 1
+}
+
+class LanguageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource  {
     
-    @IBOutlet weak var collectionView: UICollectionView!
+    let placeholder = ["Currently in development,", "Come back soon!"]
+    
+    @IBOutlet weak var tableView: UITableView!
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return placeholder.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        cell.textLabel?.text = placeholder[indexPath.row]
+        return cell
+    }
+  
+    
+    @IBAction func done(_ sender: Any) {
+        performSegue(withIdentifier: "goHome", sender: nil)
+    }
+    
+    @IBAction func trash(_ sender: Any) {
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
+

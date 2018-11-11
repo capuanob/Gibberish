@@ -38,24 +38,42 @@ class ViewController: UIViewController {
     
     //Selector for live decoding / encoding
     @objc func textFieldDidChange(_ textField: UITextField) {
-        if let textInput = textField.text {
-            let getType = bundle.getType(ofType: btnDrop.currentTitle!, string: textInput)
-            
-            if getType == "segue" { performSegue(withIdentifier: "toLanguage", sender: nil) }
-            decypherTextField.text = getType
+        
+        if cypherTextField == textField {
+            print ("Entering into blue field.")
+            if let textInput = textField.text {
+                permanentData.isEncoding = 1
+                decypherTextField.text = bundle.getType(ofType: btnDrop.currentTitle!, string: textInput)
+            }
+        } else {
+            if let textInput = textField.text {
+                print ("Entering into pink field.")
+                 permanentData.isEncoding = -1
+                cypherTextField.text = bundle.getType(ofType: btnDrop.currentTitle!, string: textInput)
+            }
         }
     }
     
+    @IBAction func createOwnPressed(_ sender: Any) {
+         performSegue(withIdentifier: "toLanguage", sender: nil)
+    }
     
     func setUpTextFields() {
         
         //Allows cyphered text to be written live in decypher text field.
          cypherTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        decypherTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+    }
+    
+    func createNewProfile(order arr: [String]) {
+        AvailableCyphers.list.append("Custom Profile")
+        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        btnDrop.setTitle(AvailableCyphers.list[0], for: .normal)
         tblView.isHidden = true
         setUpTextFields()
     }
@@ -65,17 +83,17 @@ class ViewController: UIViewController {
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return bundle.availableCyphers.count
+        return AvailableCyphers.list.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = bundle.availableCyphers[indexPath.row]
+        cell.textLabel?.text = AvailableCyphers.list[indexPath.row]
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        btnDrop.setTitle("\(bundle.availableCyphers[indexPath.row])", for: .normal)
+        btnDrop.setTitle("\(AvailableCyphers.list[indexPath.row])", for: .normal)
         textFieldDidChange(cypherTextField)
         animate (toggle: false)
     }

@@ -13,7 +13,9 @@ class CypherBundle {
     
     private let upperRange = 65...90
     private let lowerRange = 97...122
-    
+    private let lowerCaseEmojiAlphabet = [Character]("🍎🍌🥕👹🍆🤬😎🏨❄️🕹🔪🦁🐒🥜👌💩❓🚀👾😜🙃🖖😉🎅✌️🤐")
+    private let upperCaseEmojiAlphabet = [Character]("👽🍚🤠👺🌏🔥👻❤️🏝🏃‍♀️👘🍋🦍🚫🌊🍑🤫🤖🏊‍♀️🙇‍♂️☔️🎻😲🙅‍♀️🎊💤")
+     let alphabetForwards = [Character]("abcdefghijklmnopqrstuvwxyz")
     public func getType(ofType type: String, string str: String) -> String  {
         switch type {
         case "Reverse":
@@ -21,6 +23,8 @@ class CypherBundle {
             return reverse(encode: str)
         case "Inverter":
             return inverter(encode: str)
+        case "Emojify":
+            return emojify(encode: str, encode: ((permanentData.isEncoding == 1) ? true : false))
         case "Binary":
             return binary(encode: str, dir: permanentData.isEncoding)
         case "Caesar cipher":
@@ -34,6 +38,40 @@ class CypherBundle {
         default:
             return str
         }
+    }
+    
+    public func emojify(encode str: String, encode: Bool) -> String {
+        var result = ""
+        let alphabetArray = [Character](alphabetForwards)
+        
+        if encode {
+            for c in str {
+               let scalar = String(c).unicodeScalars
+                if CharacterSet.uppercaseLetters.contains(scalar[scalar.startIndex]) {
+                    let emoji = upperCaseEmojiAlphabet[alphabetArray.firstIndex(of: Character(String(c).lowercased()))!]
+                    result.append(emoji)
+                } else if CharacterSet.lowercaseLetters.contains(scalar[scalar.startIndex]) {
+                   let emoji = lowerCaseEmojiAlphabet[alphabetArray.firstIndex(of: c)!]
+                    result.append(emoji)
+                } else {
+                    result.append(c)
+                }
+            }
+        } else {
+            for c in str {
+                if upperCaseEmojiAlphabet.contains(c) {
+                    let letter = alphabetArray[upperCaseEmojiAlphabet.firstIndex(of: c)!]
+                    result.append(Character(String(letter).uppercased()))
+                } else if lowerCaseEmojiAlphabet.contains(c) {
+                    let letter = alphabetArray[lowerCaseEmojiAlphabet.firstIndex(of: c)!]
+                    result.append(letter)
+                } else {
+                    result.append(c)
+                }
+            }
+        }
+        
+        return result
     }
     
     public func randomize(encode str: String, by s: Int) -> String {
@@ -128,7 +166,6 @@ class CypherBundle {
     
     public func inverter(encode str: String) -> String {
         var result = [Character]()
-        let alphabetForwards = [Character]("abcdefghijklmnopqrstuvwxyz")
         let alphabetBackwards = [Character](alphabetForwards.reversed())
         
         for c in str {

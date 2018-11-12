@@ -27,6 +27,7 @@
 		A51427D4219789A500635CD9 /* Lato-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A51427C9219789A500635CD9 /* Lato-Light.ttf */; };
 		A51427D621979D2A00635CD9 /* LanguageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51427D521979D2A00635CD9 /* LanguageViewController.swift */; };
 		A51427DC2197AEF300635CD9 /* availableCyphers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51427DB2197AEF300635CD9 /* availableCyphers.swift */; };
+		A51427E2219A06CD00635CD9 /* languageStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51427E1219A06CD00635CD9 /* languageStack.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		A51427C9219789A500635CD9 /* Lato-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Light.ttf"; sourceTree = "<group>"; };
 		A51427D521979D2A00635CD9 /* LanguageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageViewController.swift; sourceTree = "<group>"; };
 		A51427DB2197AEF300635CD9 /* availableCyphers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = availableCyphers.swift; sourceTree = "<group>"; };
+		A51427E1219A06CD00635CD9 /* languageStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = languageStack.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +92,7 @@
 				A51427BC21975CB600635CD9 /* cyphers.swift */,
 				A51427DB2197AEF300635CD9 /* availableCyphers.swift */,
 				A51427AB21975A7900635CD9 /* Main.storyboard */,
+				A51427E1219A06CD00635CD9 /* languageStack.swift */,
 				A51427D521979D2A00635CD9 /* LanguageViewController.swift */,
 				A51427B121975A7B00635CD9 /* Assets.xcassets */,
 				A51427B321975A7B00635CD9 /* LaunchScreen.storyboard */,
@@ -204,6 +207,7 @@
 				A51427B021975A7900635CD9 /* Gibberish.xcdatamodeld in Sources */,
 				A51427AA21975A7900635CD9 /* ViewController.swift in Sources */,
 				A51427BD21975CB600635CD9 /* cyphers.swift in Sources */,
+				A51427E2219A06CD00635CD9 /* languageStack.swift in Sources */,
 				A51427A821975A7900635CD9 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

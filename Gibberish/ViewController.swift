@@ -8,16 +8,18 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITextViewDelegate {
     
     let bundle = CypherBundle()
+    private var displayingPlaceholder = true
+    private var stack = languageStack()
     
     @IBOutlet weak var btnDrop: UIButton!
     @IBOutlet weak var tblView: UITableView!
     
-    @IBOutlet weak var cypherTextField: UITextField!
+    @IBOutlet weak var cypherView: UITextView!
     
-    @IBOutlet weak var decypherTextField: UITextField!
+    @IBOutlet weak var decypherView: UITextView!
     
     @IBAction func onClickDropButton(_ sender: Any) {
         tblView.isHidden ? animate(toggle: true) : animate(toggle: false)
@@ -37,32 +39,23 @@ class ViewController: UIViewController {
     }
     
     //Selector for live decoding / encoding
-    @objc func textFieldDidChange(_ textField: UITextField) {
-        
-        if cypherTextField == textField {
-            print ("Entering into blue field.")
-            if let textInput = textField.text {
+    @objc func textViewDidChange(_ textView: UITextView) {
+      
+        if cypherView == textView {
+            if let textInput = textView.text {
                 permanentData.isEncoding = 1
-                decypherTextField.text = bundle.getType(ofType: btnDrop.currentTitle!, string: textInput)
+                decypherView.text = bundle.getType(ofType: btnDrop.currentTitle!, string: textInput)
             }
         } else {
-            if let textInput = textField.text {
-                print ("Entering into pink field.")
-                 permanentData.isEncoding = -1
-                cypherTextField.text = bundle.getType(ofType: btnDrop.currentTitle!, string: textInput)
+            if let textInput = textView.text {
+                permanentData.isEncoding = -1
+                cypherView.text = bundle.getType(ofType: btnDrop.currentTitle!, string: textInput)
             }
         }
     }
-    
+
     @IBAction func createOwnPressed(_ sender: Any) {
          performSegue(withIdentifier: "toLanguage", sender: nil)
-    }
-    
-    func setUpTextFields() {
-        
-        //Allows cyphered text to be written live in decypher text field.
-         cypherTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-        decypherTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
     }
     
     func createNewProfile(order arr: [String]) {
@@ -75,7 +68,7 @@ class ViewController: UIViewController {
         
         btnDrop.setTitle(AvailableCyphers.list[0], for: .normal)
         tblView.isHidden = true
-        setUpTextFields()
+        //setUpTextFields()
     }
 
 }
@@ -94,7 +87,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         btnDrop.setTitle("\(AvailableCyphers.list[indexPath.row])", for: .normal)
-        textFieldDidChange(cypherTextField)
+        textViewDidChange(cypherView)
         animate (toggle: false)
     }
 }
